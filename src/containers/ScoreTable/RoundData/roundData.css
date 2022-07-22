@@ -1,0 +1,19 @@
+.round-data {
+  position: fixed;
+  width: 75%;
+  height: 5rem;
+  right: 10px;
+  top: 30px;
+}
+
+.round-data-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.round-data-form > input,
+button {
+  height: 2rem;
+  border-radius: 5px;
+}
