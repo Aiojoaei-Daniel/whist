@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import PlayersData from "./PlayersData/PlayersData";
 import RoundData from "./RoundData/RoundData";
+import Alert from "../../components/Alert/Alert";
 
 import getRounds from "../../utils/getRounds";
 
@@ -57,6 +58,7 @@ const ScoreTable = () => {
           setRoundScore={setRoundScore}
         />
       )}
+      {/* <Alert /> */}
       {inGame && (
         <div className="table-body">
           <table>
@@ -75,7 +77,10 @@ const ScoreTable = () => {
             <tbody>
               {rounds.map((round, index) => (
                 <tr key={index}>
-                  <td className="round-numbers" style={{ color: "white" }}>
+                  <td
+                    className="round-numbers"
+                    style={{ color: "white", textAlign: "center" }}
+                  >
                     {round}
                   </td>
                   {playersName.map((name, nameIndex) => (
@@ -101,8 +106,6 @@ const ScoreTable = () => {
                       </div>
                     </td>
                   ))}
-
-                  {/* {playersName.push(playersName.shift()) && false} */}
                 </tr>
               ))}
             </tbody>

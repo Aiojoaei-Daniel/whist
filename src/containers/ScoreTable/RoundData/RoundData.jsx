@@ -26,8 +26,8 @@ const RoundData = ({
   return (
     <div className="round-data">
       <form action="" className="round-data-form" onSubmit={handleSubmit}>
-        <input type="number" name="hands" placeholder="Number of hands" />
-        <input type="number" name="score" placeholder="Final points" />
+        <input type="number" name="hands" placeholder="Câte mâini faci?" />
+        <input type="number" name="score" placeholder="Câte mâini ai făcut?" />
         <button type="submit">Submit</button>
       </form>
     </div>
