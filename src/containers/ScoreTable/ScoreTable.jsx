@@ -78,8 +78,17 @@ const ScoreTable = () => {
                   <td className="round-numbers" style={{ color: "white" }}>
                     {round}
                   </td>
-                  {playersName.map((name) => (
-                    <td key={index + name} className="score1">
+                  {playersName.map((name, nameIndex) => (
+                    <td
+                      key={index + name}
+                      className="score1"
+                      style={{
+                        border:
+                          (index - nameIndex) % playersName.length === 0
+                            ? "2px solid red"
+                            : null,
+                      }}
+                    >
                       <div
                         style={{
                           display: "flex",
