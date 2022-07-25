@@ -11,16 +11,21 @@ import "./scoreTable.css";
 const ScoreTable = () => {
   const [inGame, setInGame] = useState(false);
   const [playersName, setPlayersName] = useState([]);
+  const [playersNameCopy, setPlayersNameCopy] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [roundScore, setRoundScore] = useState(false);
   const rounds = getRounds(playersName.length);
-  const [currentRound, setCurrentRound] = useState(0);
+  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState();
-
+  const [alert, setAlert] = useState(false);
+  const [nextRound, setNextRound] = useState(false);
   let score1 = {};
+
   rounds.map((_, index) => (score1[index] = {}));
   rounds.map((_, index) => {
-    playersName.map((name) => (score1[index][name] = { hands: 0, score: 0 }));
+    playersName.map(
+      (name) => (score1[index][name] = { hands: "0", score: "0" })
+    );
   });
   const [score, setScore] = useState(score1); // !
 
@@ -33,8 +38,12 @@ const ScoreTable = () => {
     setRoundScore((prevValue) =>
       prevValue ? (prevValue = false) : (prevValue = true)
     );
-    setCurrentRound(index);
     setCurrentPlayer(player);
+    setCurrentRoundIndex(index);
+  };
+
+  const handleRoundIndex = (index) => {
+    setCurrentRoundIndex(index);
   };
 
   return (
@@ -42,23 +51,32 @@ const ScoreTable = () => {
       {!inGame ? (
         <PlayersData
           setPlayersName={setPlayersName}
+          setPlayersNameCopy={setPlayersNameCopy}
           setInputValue={setInputValue}
           setInGame={setInGame}
           inputValue={inputValue}
           setScore={setScore}
           score={score1}
+          setAlert={setAlert}
+          alert={alert}
+          playersName={playersName}
         />
       ) : null}
       {roundScore && (
         <RoundData
           score={score}
           setScore={setScore}
-          currentRound={currentRound}
+          currentRoundIndex={currentRoundIndex}
           currentPlayer={currentPlayer}
           setRoundScore={setRoundScore}
+          setAlert={setAlert}
+          rounds={rounds}
+          playersName={playersName}
+          playersNameCopy={playersNameCopy}
+          setNextRound={setNextRound}
         />
       )}
-      {/* <Alert /> */}
+      {alert && <Alert />}
       {inGame && (
         <div className="table-body">
           <table>
@@ -79,7 +97,11 @@ const ScoreTable = () => {
                 <tr key={index}>
                   <td
                     className="round-numbers"
-                    style={{ color: "white", textAlign: "center" }}
+                    style={{
+                      color: currentRoundIndex === index ? "red" : "white",
+                      textAlign: "center",
+                    }}
+                    onClick={() => handleRoundIndex(index)}
                   >
                     {round}
                   </td>
@@ -90,7 +112,7 @@ const ScoreTable = () => {
                       style={{
                         border:
                           (index - nameIndex) % playersName.length === 0
-                            ? "2px solid red"
+                            ? "2px solid green"
                             : null,
                       }}
                     >
@@ -101,8 +123,22 @@ const ScoreTable = () => {
                         }}
                         onClick={() => handleAddScore(index, name)}
                       >
-                        <p>{score[index][name].hands}</p>
-                        <p>{score[index][name].score}</p>
+                        <p
+                          style={{
+                            color:
+                              score[index][name].hands !== "0" ? "green" : null,
+                          }}
+                        >
+                          {score[index][name].hands}
+                        </p>
+                        <p
+                          style={{
+                            color:
+                              score[index][name].score !== "0" ? "green" : null,
+                          }}
+                        >
+                          {score[index][name].score}
+                        </p>
                       </div>
                     </td>
                   ))}

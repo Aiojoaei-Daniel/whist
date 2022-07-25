@@ -3,7 +3,7 @@ import "./alert.css";
 const Alert = () => {
   return (
     <div className="alert">
-      <p>Alertă!</p>
+      <p>Alertă! Număr de mâini depășit!</p>
     </div>
   );
 };
