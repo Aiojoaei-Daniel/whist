@@ -9,25 +9,18 @@ import getRounds from "../../utils/getRounds";
 import "./scoreTable.css";
 
 const ScoreTable = () => {
-  const [inGame, setInGame] = useState(false);
+  const [score, setScore] = useState();
   const [playersName, setPlayersName] = useState([]);
-  const [playersNameCopy, setPlayersNameCopy] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const [roundScore, setRoundScore] = useState(false);
-  const rounds = getRounds(playersName.length);
-  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
   const [currentPlayer, setCurrentPlayer] = useState();
+  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
   const [alert, setAlert] = useState(false);
-  const [nextRound, setNextRound] = useState(false);
-  let score1 = {};
+  const [messageAlert, setMessageAlert] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [inGame, setInGame] = useState(false);
+  const [showScoreForm, setShowScoreForm] = useState(false);
+  const [count, setCount] = useState(0);
 
-  rounds.map((_, index) => (score1[index] = {}));
-  rounds.map((_, index) => {
-    playersName.map(
-      (name) => (score1[index][name] = { hands: "0", score: "0" })
-    );
-  });
-  const [score, setScore] = useState(score1); // !
+  const rounds = getRounds(playersName.length);
 
   const handleNewGame = () => {
     setInGame(false);
@@ -35,48 +28,58 @@ const ScoreTable = () => {
   };
 
   const handleAddScore = (index, player) => {
-    setRoundScore((prevValue) =>
+    setShowScoreForm((prevValue) =>
       prevValue ? (prevValue = false) : (prevValue = true)
     );
+
     setCurrentPlayer(player);
     setCurrentRoundIndex(index);
   };
 
   const handleRoundIndex = (index) => {
     setCurrentRoundIndex(index);
+    setCount(0);
+    playersName.forEach((player) => {
+      score[currentRoundIndex][player].hands = "0";
+      score[currentRoundIndex][player].score = "0";
+      score[currentRoundIndex][player].finalHands = "0";
+    });
   };
 
   return (
     <>
       {!inGame ? (
         <PlayersData
-          setPlayersName={setPlayersName}
-          setPlayersNameCopy={setPlayersNameCopy}
-          setInputValue={setInputValue}
-          setInGame={setInGame}
-          inputValue={inputValue}
-          setScore={setScore}
-          score={score1}
-          setAlert={setAlert}
+          rounds={rounds}
           alert={alert}
+          setAlert={setAlert}
+          setScore={setScore}
+          setInGame={setInGame}
           playersName={playersName}
+          setPlayersName={setPlayersName}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          messageAlert={messageAlert}
+          setMessageAlert={setMessageAlert}
         />
       ) : null}
-      {roundScore && (
+      {showScoreForm && (
         <RoundData
           score={score}
           setScore={setScore}
-          currentRoundIndex={currentRoundIndex}
-          currentPlayer={currentPlayer}
-          setRoundScore={setRoundScore}
-          setAlert={setAlert}
           rounds={rounds}
           playersName={playersName}
-          playersNameCopy={playersNameCopy}
-          setNextRound={setNextRound}
+          currentPlayer={currentPlayer}
+          currentRoundIndex={currentRoundIndex}
+          setAlert={setAlert}
+          setMessageAlert={setMessageAlert}
+          setShowScoreForm={setShowScoreForm}
+          count={count}
+          setCount={setCount}
         />
       )}
-      {alert && <Alert />}
+
+      {alert && <Alert message={messageAlert} />}
       {inGame && (
         <div className="table-body">
           <table>

@@ -1,19 +1,16 @@
 .players-data {
-  background-color: var(--bg-color);
   color: var(--btn-color);
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  background-color: rgb(32, 32, 32);
   height: 100vh;
 }
 
 .form-data-players {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  max-height: 50%;
-  background-color: rgb(32, 32, 32);
-  padding: 1rem;
 }
 
 .form-data-players > label {
@@ -24,10 +21,16 @@
 .form-data-players > submit {
   text-decoration: none;
   color: var(--btn-color);
-  align-self: center;
   margin-top: 1rem;
+  padding: 0;
 }
 
 .form-data-players > input {
   height: 2rem;
+}
+
+.players-data > button,
+.form-data-players {
+  width: 48%;
+  padding: 0;
 }

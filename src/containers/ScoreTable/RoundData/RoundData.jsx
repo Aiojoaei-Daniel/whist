@@ -1,92 +1,103 @@
 import React from "react";
 
+import { utils } from "./utils";
+import { ALERT, BET_HANDS_INPUT, MADE_HANDS_INPUT } from "./copy";
+
 import "./roundData.css";
 
 const RoundData = ({
   score,
   setScore,
-  currentRoundIndex,
-  currentPlayer,
-  setRoundScore,
-  setAlert,
   rounds,
   playersName,
-  playersNameCopy,
-  setNextRound,
+  currentPlayer,
+  currentRoundIndex,
+  setAlert,
+  setMessageAlert,
+  setShowScoreForm,
+  count,
+  setCount,
 }) => {
+  const { showAlert, setBetHands, setPlayerScore } = utils(
+    setAlert,
+    setMessageAlert
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    // const scoreCopy = { score };  sa nu modific direct state-ul
     const scoreCopy = score;
-
     const currentHandsBet = event.target.hands.value;
-    let handsBetStorage = scoreCopy[currentRoundIndex][currentPlayer];
+    let betHands = scoreCopy[currentRoundIndex][currentPlayer];
     const currentScore = event.target.score.value;
     let scoreStorage = scoreCopy[currentRoundIndex][currentPlayer];
-    const round = rounds[currentRoundIndex];
+    const currentRound = rounds[currentRoundIndex];
 
-    let oldRound = 0;
+    setBetHands(currentHandsBet, betHands, currentRound, ALERT.NUMBER_OF_HANDS);
 
-    if (currentRoundIndex > 0) {
-      oldRound = scoreCopy[currentRoundIndex - 1][currentPlayer].score;
-    }
-
-    const playersCheck = playersNameCopy.filter(
-      (player) => scoreCopy[currentRoundIndex][player].score !== "0"
+    setPlayerScore(
+      betHands,
+      scoreStorage,
+      currentScore,
+      currentRoundIndex,
+      currentPlayer,
+      currentRound,
+      scoreCopy,
+      ALERT.HANDS_VALUE,
+      ALERT.NUMBER_OF_HANDS
     );
 
-    if (currentHandsBet === "") {
-    } else if (
-      parseInt(currentHandsBet) <= round &&
-      (playersCheck.length === playersNameCopy.lenght ||
-        currentRoundIndex === 0) // mesaj pentru ca nu s a completat pt prima runda
-    ) {
-      handsBetStorage.hands = parseInt(currentHandsBet);
-      playersNameCopy.push(playersNameCopy.shift());
-      console.log(playersNameCopy);
-    } else {
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 2500);
+    if (currentHandsBet !== "" && parseInt(currentHandsBet) <= currentRound) {
+      setCount(count + 1);
     }
 
-    if (currentScore === "") {
-    } else if (
-      parseInt(currentScore) <= round &&
-      handsBetStorage.hands !== "0"
-    ) {
-      // sa pun si aici mesaj ca nu s a completat campul cu cate maini umreaza sa faca
-      if (parseInt(currentScore) === handsBetStorage.hands) {
-        scoreStorage.score = handsBetStorage.hands + 5 + oldRound;
-      } else if (parseInt(currentScore) > handsBetStorage.hands) {
-        scoreStorage.score =
-          -parseInt(currentScore) + handsBetStorage.hands + oldRound;
-      } else {
-        scoreStorage.score =
-          parseInt(currentScore) - handsBetStorage.hands + oldRound;
+    if (scoreCopy[currentRoundIndex][currentPlayer].score !== "0") {
+      setCount(0);
+    }
+
+    let betHands1 = 0;
+    let finalHands = 0;
+
+    if (count === playersName.length - 1) {
+      playersName.forEach((player) => {
+        if (
+          scoreCopy[currentRoundIndex][currentPlayer].hands !== "0" &&
+          scoreCopy[currentRoundIndex][currentPlayer].hands <= currentRound
+        ) {
+          betHands1 += parseInt(scoreCopy[currentRoundIndex][player].hands);
+        } else if (parseInt(currentHandsBet) <= currentRound) {
+          /// cand mainile pariate sunt prea mari
+          betHands1 += parseInt(currentHandsBet);
+        }
+      });
+      // aici ar trebui sa setez count = 0 si sa l folosesc si la finalHands
+    }
+    playersName.forEach((player) => {
+      if (
+        scoreCopy[currentRoundIndex][player].finalHands !== "0" &&
+        scoreCopy[currentRoundIndex][player].finalHands <= currentRound
+      ) {
+        finalHands += parseInt(scoreCopy[currentRoundIndex][player].finalHands);
+        console.log("in if", finalHands);
+      } else if (parseInt(currentScore) <= currentRound) {
+        finalHands += parseInt(currentScore);
+        console.log("in else", finalHands);
       }
-    } else {
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 2500);
-    }
-    let betHands = 0;
-    playersNameCopy.map(
-      (player) => (betHands += scoreCopy[currentRoundIndex][player].hands)
-    );
-
-    if (betHands === round) {
-      // sa pun alt mesaj si sa setez pentru primu player
-      setAlert(true);
-      setTimeout(() => {
-        setAlert(false);
-      }, 2500);
+    });
+    if (betHands1 === currentRound) {
+      showAlert(ALERT.BET_HANDS);
       scoreCopy[currentRoundIndex][currentPlayer].hands = "0";
+      setCount(playersName.length - 1);
     }
 
-    setScore(score);
-    setRoundScore(false);
+    if (finalHands > currentRound) {
+      showAlert(ALERT.FINAL_HANDS);
+
+      scoreCopy[currentRoundIndex][currentPlayer].score = "0";
+    }
+
+    setScore(scoreCopy);
+    setShowScoreForm(false);
   };
 
   return (
@@ -100,9 +111,9 @@ const RoundData = ({
               ? score[currentRoundIndex][currentPlayer].hands
               : null
           }
-          placeholder="Câte mâini faci?"
+          placeholder={BET_HANDS_INPUT}
         />
-        <input type="number" name="score" placeholder="Câte mâini ai făcut?" />
+        <input type="number" name="score" placeholder={MADE_HANDS_INPUT} />
         <button type="submit">Submit</button>
       </form>
     </div>

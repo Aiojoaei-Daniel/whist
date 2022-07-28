@@ -1,68 +1,89 @@
 import React from "react";
+
+import { getDataGameStructure } from "../../../utils/getDataGameStructure";
+
 import Alert from "../../../components/Alert/Alert";
+import {
+  PLAYER_NAME_LABEL,
+  NEXT_PLAYER_BTN,
+  START_GAME_BTN,
+  ALERT,
+} from "./copy";
 
 import "./playersData.css";
 
 const PlayersData = ({
-  setInGame,
-  setPlayersName,
-  setPlayersNameCopy,
-  setInputValue,
-  inputValue,
-  setScore,
-  score,
-  setAlert,
+  rounds,
   alert,
+  setAlert,
+  setScore,
+  setInGame,
   playersName,
+  setPlayersName,
+  inputValue,
+  setInputValue,
+  messageAlert,
+  setMessageAlert,
 }) => {
+  const dataGameStructure = getDataGameStructure(rounds, playersName);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (event.target.player.value.length <= 2) {
-      setPlayersName((prevValue) => [...prevValue, event.target.player.value]);
-      setPlayersNameCopy((prevValue) => [
-        ...prevValue,
-        event.target.player.value,
-      ]);
+
+    const playerName = event.target.player.value;
+    const playerNameLength = playerName.length;
+    const [playerNameLengthMin, playerNameLengthMax] = [1, 3];
+
+    if (
+      playerNameLengthMin <= playerNameLength &&
+      playerNameLength <= playerNameLengthMax
+    ) {
+      setPlayersName((prevValue) => [...prevValue, playerName]);
+
       setAlert(false);
+
       setInputValue("");
-      console.log("am fost aici");
     } else {
-      setInputValue("");
       setAlert(true);
-      //sa apara alarma cu maxim 2 caractere
-      console.log("mai incearca");
+
+      setMessageAlert(ALERT.PLAYER_NAME);
     }
   };
 
   const handleStartGame = () => {
-    if (playersName.length >= 3) {
+    const playersNumber = playersName.length;
+    const [minPlayersNumber, maxPlayersNumber] = [3, 6];
+
+    if (
+      playersNumber >= minPlayersNumber &&
+      playersNumber <= maxPlayersNumber
+    ) {
       setInGame(true);
-      setScore(score);
+      setScore(dataGameStructure);
+      setInputValue("");
+
       setAlert(false);
     } else {
-      setInputValue("");
       setAlert(true);
-      //sa apara alarma cu minim 3 playeri
-      console.log("mai incearca start game");
-      console.log(alert);
+      setMessageAlert(ALERT.PLAYERS_NUMBER);
     }
   };
 
   return (
     <>
-      {alert && <Alert />}
+      {alert && <Alert message={messageAlert} />}
       <div className="players-data">
         <form className="form-data-players" onSubmit={handleSubmit}>
-          <label htmlFor="player">Player name:</label>
+          <label htmlFor="player">{PLAYER_NAME_LABEL}</label>
           <input
             type="text"
             name="player"
             value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
           />
-          <button type="submit">Next Player</button>
-          <button onClick={handleStartGame}>Start Game</button>
+          <button type="submit">{NEXT_PLAYER_BTN}</button>
         </form>
+        <button onClick={handleStartGame}>{START_GAME_BTN}</button>
       </div>
     </>
   );

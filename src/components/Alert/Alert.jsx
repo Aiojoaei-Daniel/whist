@@ -1,9 +1,9 @@
 import "./alert.css";
 
-const Alert = () => {
+const Alert = ({ message }) => {
   return (
     <div className="alert">
-      <p>Alertă! Număr de mâini depășit!</p>
+      <p>{message}</p>
     </div>
   );
 };
