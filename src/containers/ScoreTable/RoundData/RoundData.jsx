@@ -7,6 +7,7 @@ import {
   MADE_HANDS_TEXT,
   SCORE_FORM_TITLE,
   EMPTY_INPUT,
+  SUBMIT_BTN,
 } from "./copy";
 
 import "./roundData.css";
@@ -70,7 +71,7 @@ const RoundData = ({
           placeholder={BET_HANDS_TEXT}
         />
         <input type="number" name="finalHands" placeholder={MADE_HANDS_TEXT} />
-        <button type="submit">Submit</button>
+        <button type="submit">{SUBMIT_BTN}</button>
       </form>
     </div>
   );

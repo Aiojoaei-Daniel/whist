@@ -66,7 +66,7 @@ export const utils = (
       currentFinalHands !== EMPTY_INPUT &&
       !canAddFinalHands
     ) {
-      showAlert(ALERT.BET_HANDS_FIRST);
+      showAlert(ALERT.HANDS_VALUE);
     }
 
     if (canAddFinalHands) {
@@ -89,7 +89,7 @@ export const utils = (
         showAlert(ALERT.NUMBER_OF_HANDS);
       }
     } else {
-      showAlert(ALERT.BET_HANDS_FIRST);
+      showAlert(ALERT.HANDS_VALUE);
     }
 
     if (

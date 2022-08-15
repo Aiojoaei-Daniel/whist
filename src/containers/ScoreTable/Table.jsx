@@ -51,9 +51,9 @@ const Table = ({
                   className="score-cell"
                   onClick={() => handleAddScore(name)}
                   style={{
-                    border: index % 2 !== 0 ? "4px solid purple" : null,
+                    border: index % 2 !== 0 ? "3px solid purple" : null,
                     borderRight:
-                      index % 2 !== 0 ? "4px solid purple" : "2px solid purple",
+                      index % 2 !== 0 ? "3px solid purple" : "2px solid purple",
                     borderLeft: "0",
                   }}
                 >
