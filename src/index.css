@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-color);
@@ -19,7 +18,10 @@ code {
 }
 
 :root {
-  --bg-color: black;
-  --text-color: white;
-  --btn-color: white;
+  --main-bg-color: purple;
+  --second-bg-color: white;
+  --dark-bg-color: black;
+  --text-color-light-bg: black;
+  --text-color-dark-bg: white;
+  --alert-bg: red;
 }

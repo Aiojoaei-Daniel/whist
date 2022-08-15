@@ -1,23 +1,64 @@
-.table-header {
-  color: white;
-  border: 2px solid red;
-}
-
-.score1 {
-  color: white;
-  width: 3rem;
-  text-align: center;
-  border: 2px solid purple;
-  /* background-color: purple; */
-  border-radius: 5px;
-}
-
-.round-numbers {
-  width: 2rem;
-  border: 2px solid purple;
-}
-
-table {
+.table-page {
   width: 100%;
-  margin: 0;
+  background-color: var(--second-bg-color);
+  border-spacing: 0;
+}
+
+.table-header {
+  color: var(--text-color-light-bg);
+  padding: 10px 0;
+  border-left: 4px solid var(--main-bg-color);
+  border-top: 4px solid var(--main-bg-color);
+}
+
+.score-cells {
+  width: 3rem;
+}
+
+.score-cell {
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.round-number {
+  width: 2rem;
+  text-align: center;
+  background-color: var(--main-bg-color);
+}
+
+.new-game-btn {
+  font-size: large;
+  width: 100%;
+  height: 3rem;
+  color: var(--text-color-dark-bg);
+  border: 2px solid var(--text-color-dark-bg);
+  background-color: var(--main-bg-color);
+}
+
+.reset-btn {
+  background: transparent;
+  backdrop-filter: blur(10px);
+  position: fixed;
+  top: 49px;
+  left: 70px;
+  width: 50%;
+  height: 3rem;
+  border: 3px solid var(--main-bg-color);
+  border-radius: 20px;
+}
+
+.previous {
+  position: fixed;
+  top: 230px;
+  width: 2.5rem;
+  height: 3rem;
+  font-size: 40px;
+  background: transparent;
+  backdrop-filter: blur(5px);
+  border-radius: 10%;
+  border: 2px solid var(--main-bg-color);
+  border-left: 0;
+  padding-top: 0;
+  padding-bottom: 3.1rem;
 }

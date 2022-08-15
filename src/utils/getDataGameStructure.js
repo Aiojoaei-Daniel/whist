@@ -1,16 +1,30 @@
 export const getDataGameStructure = (rounds, playersName) => {
+  const emptyCell = "0";
   let dataGameStructure = {};
 
-  rounds.map((_, index) => (dataGameStructure[index] = {}));
-  rounds.map((_, index) => {
-    playersName.map(
-      (name) =>
-        (dataGameStructure[index][name] = {
-          hands: "0",
-          finalHands: "0",
-          score: "0",
+  let playersOrder = Array.from(
+    { length: playersName.length },
+    (_, i) => i + 1
+  );
+
+  // create round property for dataGameSructure object
+  rounds.forEach((_, round) => (dataGameStructure[round] = {}));
+
+  // create players properties
+  rounds.forEach((_, roundIndex) => {
+    playersName.forEach(
+      (name, playerIndex) =>
+        (dataGameStructure[roundIndex][name] = {
+          hands: emptyCell,
+          finalHands: emptyCell,
+          score: emptyCell,
+          playerOrder: playersOrder[playerIndex],
         })
     );
+
+    // change the order of players for each round
+    playersOrder.unshift(playersOrder.pop());
   });
+
   return dataGameStructure;
 };

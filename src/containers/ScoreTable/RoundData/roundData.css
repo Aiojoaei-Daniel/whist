@@ -1,9 +1,8 @@
 .round-data {
   position: fixed;
   width: 75%;
-  height: 5rem;
-  right: 10px;
-  top: 30px;
+  right: 8px;
+  top: 100px;
 }
 
 .round-data-form {
@@ -14,6 +13,32 @@
 
 .round-data-form > input,
 button {
+  background: transparent;
+  backdrop-filter: blur(20px);
+}
+
+.round-data-form > input {
+  border: 0;
+  border-left: 3px solid var(--main-bg-color);
+  border-right: 3px solid var(--main-bg-color);
+  border-top: 3px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  height: 2.5rem;
+}
+.round-data-form > button {
   height: 2rem;
-  border-radius: 5px;
+  border: 0;
+  color: var(--text-color-dark-bg);
+  background-color: var(--main-bg-color);
+}
+
+.score-form-title {
+  text-align: center;
+  margin: 0;
+  background-color: var(--main-bg-color);
+  color: var(--text-color-dark-bg);
+}
+
+.round-data-form > input::placeholder {
+  color: rgb(137, 115, 137);
 }

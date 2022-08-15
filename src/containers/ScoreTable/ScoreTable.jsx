@@ -1,158 +1,150 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import PlayersData from "./PlayersData/PlayersData";
 import RoundData from "./RoundData/RoundData";
+import Table from "./Table";
 import Alert from "../../components/Alert/Alert";
 
 import getRounds from "../../utils/getRounds";
+import { RESET_ROUND_BTN } from "../../utils/copy";
 
 import "./scoreTable.css";
 
 const ScoreTable = () => {
-  const [score, setScore] = useState();
-  const [playersName, setPlayersName] = useState([]);
-  const [currentPlayer, setCurrentPlayer] = useState();
+  const [score, setScore] = useState({});
+
+  const [playersNames, setPlayersNames] = useState([]);
+  const [currentPlayer, setCurrentPlayer] = useState("");
+
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
-  const [alert, setAlert] = useState(false);
-  const [messageAlert, setMessageAlert] = useState("");
+
   const [inputValue, setInputValue] = useState("");
+  const [messageAlert, setMessageAlert] = useState("");
+
+  const [alert, setAlert] = useState(false);
   const [inGame, setInGame] = useState(false);
   const [showScoreForm, setShowScoreForm] = useState(false);
-  const [count, setCount] = useState(0);
+  const [resetRound, setResetRound] = useState(false);
+  const [canAddFinalHands, setCanAddFinalHands] = useState(false);
 
-  const rounds = getRounds(playersName.length);
+  const rounds = getRounds(playersNames.length);
+  const currentRound = rounds[currentRoundIndex];
+
+  const navigate = useNavigate();
 
   const handleNewGame = () => {
     setInGame(false);
-    setPlayersName([]);
+    setPlayersNames([]);
+    setScore({});
+    setCurrentRoundIndex(0);
+    setCanAddFinalHands(false);
   };
 
-  const handleAddScore = (index, player) => {
+  const handleAddScore = (player) => {
     setShowScoreForm((prevValue) =>
       prevValue ? (prevValue = false) : (prevValue = true)
     );
 
     setCurrentPlayer(player);
-    setCurrentRoundIndex(index);
+    setResetRound(false);
   };
 
-  const handleRoundIndex = (index) => {
-    setCurrentRoundIndex(index);
-    setCount(0);
-    playersName.forEach((player) => {
-      score[currentRoundIndex][player].hands = "0";
-      score[currentRoundIndex][player].score = "0";
-      score[currentRoundIndex][player].finalHands = "0";
+  const handleRoundIndex = () => {
+    setShowScoreForm(false);
+    setResetRound((prevValue) =>
+      prevValue ? (prevValue = false) : (prevValue = true)
+    );
+  };
+
+  const handleResetRound = () => {
+    setResetRound((prevValue) =>
+      prevValue ? (prevValue = false) : (prevValue = true)
+    );
+
+    setCanAddFinalHands(false);
+
+    playersNames.forEach((player) => {
+      setScore((prevVal) => ({
+        ...prevVal,
+        [currentRoundIndex]: {
+          ...prevVal[currentRoundIndex],
+          [player]: {
+            ...prevVal[currentRoundIndex][player],
+            hands: "0",
+            score: "0",
+            finalHands: "0",
+          },
+        },
+      }));
     });
   };
 
+  const handleReturn = () => {
+    if (inGame) {
+      setInGame(false);
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
-    <>
+    <div className="game-score">
+      {alert && <Alert message={messageAlert} />}
+      <button className="previous" onClick={handleReturn}>
+        &#8249;
+      </button>
       {!inGame ? (
         <PlayersData
           rounds={rounds}
-          alert={alert}
           setAlert={setAlert}
           setScore={setScore}
           setInGame={setInGame}
-          playersName={playersName}
-          setPlayersName={setPlayersName}
+          playersNames={playersNames}
+          setPlayersNames={setPlayersNames}
           inputValue={inputValue}
           setInputValue={setInputValue}
-          messageAlert={messageAlert}
           setMessageAlert={setMessageAlert}
         />
       ) : null}
+      {resetRound && (
+        <button onClick={handleResetRound} className="reset-btn">
+          {RESET_ROUND_BTN} {currentRound} ({currentRoundIndex + 1})
+        </button>
+      )}
       {showScoreForm && (
         <RoundData
           score={score}
           setScore={setScore}
-          rounds={rounds}
-          playersName={playersName}
+          currentRound={currentRound}
+          playersNames={playersNames}
           currentPlayer={currentPlayer}
           currentRoundIndex={currentRoundIndex}
           setAlert={setAlert}
           setMessageAlert={setMessageAlert}
           setShowScoreForm={setShowScoreForm}
-          count={count}
-          setCount={setCount}
+          canAddFinalHands={canAddFinalHands}
+          setCanAddFinalHands={setCanAddFinalHands}
+          setCurrentRoundIndex={setCurrentRoundIndex}
         />
       )}
 
-      {alert && <Alert message={messageAlert} />}
       {inGame && (
-        <div className="table-body">
-          <table>
-            <thead>
-              <tr>
-                <th className="table-header">Rnd</th>
-                {playersName.length > 2
-                  ? playersName.map((name, index) => (
-                      <th key={index} className="table-header">
-                        {name}
-                      </th>
-                    ))
-                  : null}
-              </tr>
-            </thead>
-            <tbody>
-              {rounds.map((round, index) => (
-                <tr key={index}>
-                  <td
-                    className="round-numbers"
-                    style={{
-                      color: currentRoundIndex === index ? "red" : "white",
-                      textAlign: "center",
-                    }}
-                    onClick={() => handleRoundIndex(index)}
-                  >
-                    {round}
-                  </td>
-                  {playersName.map((name, nameIndex) => (
-                    <td
-                      key={index + name}
-                      className="score1"
-                      style={{
-                        border:
-                          (index - nameIndex) % playersName.length === 0
-                            ? "2px solid green"
-                            : null,
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-around",
-                        }}
-                        onClick={() => handleAddScore(index, name)}
-                      >
-                        <p
-                          style={{
-                            color:
-                              score[index][name].hands !== "0" ? "green" : null,
-                          }}
-                        >
-                          {score[index][name].hands}
-                        </p>
-                        <p
-                          style={{
-                            color:
-                              score[index][name].score !== "0" ? "green" : null,
-                          }}
-                        >
-                          {score[index][name].score}
-                        </p>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          score={score}
+          rounds={rounds}
+          playersNames={playersNames}
+          handleAddScore={handleAddScore}
+          handleRoundIndex={handleRoundIndex}
+          currentRoundIndex={currentRoundIndex}
+        />
       )}
-      {inGame ? <button onClick={handleNewGame}>New game</button> : null}
-    </>
+      {inGame ? (
+        <button className="new-game-btn" onClick={handleNewGame}>
+          New game
+        </button>
+      ) : null}
+    </div>
   );
 };
 
