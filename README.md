@@ -9,6 +9,5 @@ This app was designed to be used on phones, but it also works well on computers.
 
 Below I put the link to the application.
 
-[linkedin](https://www.linkedin.com/in/daniel-aiojoaei-27abb016a/)
 
 https://whist-9598b.web.app/
