@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./instructionsPage.css";
+import "./instructionPage.css";
 import { Link } from "react-router-dom";
 
-const InstructionsPage = () => {
+const InstructionPage = () => {
   return (
     <div className="instructions-page">
       <Link to="/">
@@ -11,8 +11,9 @@ const InstructionsPage = () => {
       </Link>
       <h1 style={{ paddingTop: "10px" }}> Instructiuni </h1>
       <p>
-        Whist-ul se joaca in 3-6 jucatori cu un pachet standard de carti.
-      </p>{" "}
+        Jucătorul care are deasupra scorului 2 linii este primul din acea rundă.
+      </p>
+      <p>Whist-ul se joaca in 3-6 jucatori cu un pachet standard de carti.</p>
       <p>
         Din pachet se vor folosi 8 carti pentru fiecare jucator de la masa (24
         carti pentru 3 jucatori, 32 carti pentru 4 jucatori etc.), incepand cu
@@ -117,4 +118,4 @@ const InstructionsPage = () => {
   );
 };
 
-export default InstructionsPage;
+export default InstructionPage;

@@ -18,7 +18,7 @@ const StartPage = () => {
         <h1 className="title">{SECOND_TITLE}</h1>
       </div>
       <div className="btns">
-        <Link to="instructions-page" className="btn">
+        <Link to="instruction-page" className="btn">
           {INSTRUCTIONS_BTN}
         </Link>
         <Link to="score-table" className="btn">

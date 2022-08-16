@@ -1,12 +1,21 @@
+.instructions-page {
+  background-color: var(--main-bg-color);
+}
+
 .instructions-page > h1 {
   width: 100%;
   text-align: start;
+  padding: 20px 0px 10px 15px;
   color: var(--text-color-dark-bg);
   background-color: var(--main-bg-color);
 }
 
-.instructions-page {
+.instructions-page > h2 {
+  margin: 0;
+  width: 100%;
+  padding: 20px 0px 10px 15px;
   background-color: var(--main-bg-color);
+  color: var(--text-color-dark-bg);
 }
 
 .instructions-page > p {
@@ -19,16 +28,4 @@
   border-right: 4px solid var(--main-bg-color);
   border-bottom: 4px solid var(--main-bg-color);
   background-color: var(--second-bg-color);
-}
-
-.instructions-page > h2 {
-  margin: 0;
-  width: 100%;
-  background-color: var(--main-bg-color);
-}
-
-.instructions-page > h1,
-h2 {
-  padding: 20px 0px 10px 15px;
-  color: var(--text-color-dark-bg);
 }
