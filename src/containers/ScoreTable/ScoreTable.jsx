@@ -82,6 +82,7 @@ const ScoreTable = () => {
 
   const handleReturn = () => {
     if (inGame) {
+      setShowScoreForm(false);
       setInGame(false);
     } else {
       navigate("/");
