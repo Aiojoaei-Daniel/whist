@@ -10,4 +10,4 @@ But the app does these things for users, generating a table based on the number 
 
 Moreover, it warns if wrong data has been entered or if players have not followed the rules during the round.
 
-You can use the application by accessing  [Whist](https://whist-9598b.web.app/).
+The application can be accessed through the [Whist](https://whist-9598b.web.app/) link.
