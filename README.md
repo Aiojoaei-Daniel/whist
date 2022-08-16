@@ -5,6 +5,8 @@ But the app does these things for users, generating a table based on the number 
 
 Moreover, it warns if wrong data has been entered or if players have not followed the rules during the round.
 
+This app was designed to be used on phones, but it also works well on computers.
+
 Below I put the link to the application.
 
 https://whist-9598b.web.app/
