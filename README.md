@@ -1,11 +1,10 @@
 ## Whist - Scoreboard
 
-With a simple interface, the front-end is built with JavaScript and React, and for the server side I used Firebase.
+With a simple interface, the Front-End was built with JavaScript and React, and for the server side I used Firebase.
 
-It helps the user with quick and easy scoring for the Whist game.
+This application helps the user with quick and easy scoring for the Whist game.
 
-Normally for this game, a sheet of paper is used, a table is drawn and for each round, the score is noted and calculated. 
-But the app does these things for users, generating a table based on the number of players and calculating the score for each round.
+Normally, this game requires a sheet of paper to draw a table on, but the app does this for users by generating a table based on the number of players and calculating the score for each round.
 
 Moreover, it warns if wrong data has been entered or if players have not followed the rules during the round.
 
