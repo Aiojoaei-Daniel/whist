@@ -1,6 +1,6 @@
 ## Whist - Scoreboard
 
-> This app was designed to be used on phones, but it also works well on
+> This app was designed to be used on mobile phones, but it also works well on
 > PCs.
 
 It helps the user with quick and easy scoring for the Whist game.
