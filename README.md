@@ -5,6 +5,7 @@
 > PCs.
 
 With a simple interface, this application helps the user to score quickly and easily for the Whist game.
+
 It is composed of:
 
  - JavaScript and React to create the Front-End
