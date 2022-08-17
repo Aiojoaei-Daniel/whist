@@ -4,7 +4,7 @@
 > This app was designed to be used on mobile phones, but it also works well on
 > PCs.
 
-With a simple interface, this application helps the user to easily note the score for the Whist game.
+With a simple interface, it helps the user to easily note the score for the Whist game.
 
 It is composed of:
 
