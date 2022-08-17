@@ -8,7 +8,7 @@ With a simple interface, this application helps the user to score quickly and ea
 
 It is composed of:
 
- - JavaScript and React to create the Front-End
+ - JavaScript and ReactJS to create the Front-End
  - Firebase for the server side
 
 Normally, this game requires a sheet of paper to draw a table on, but the app does this for users by generating a table based on the number of players and calculating the score for each round.
